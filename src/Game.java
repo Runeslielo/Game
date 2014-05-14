@@ -12,6 +12,8 @@ public class Game{
 
     public static void main(String[] args) {
 
+        Fight.startFight(player);
+        System.out.println("End of Fight");
         //Walking System
 
     }

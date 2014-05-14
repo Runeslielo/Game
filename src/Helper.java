@@ -1,10 +1,10 @@
 public class Helper {
 
-    public static boolean alive(Player player){
+    public static boolean isAlive(Player player){
         return(player.getHealth() > 0);
     }
 
-    public static boolean alive(Enemy enemy){
+    public static boolean isAlive(Enemy enemy){
         return(enemy.getHealth() > 0);
     }
 
@@ -12,18 +12,16 @@ public class Helper {
         return(player.getSpeed() >= enemy.getSpeed());
     }
 
-    public static int pAttack(Player player, Enemy enemy){
-        int eHpLoss = (player.getDamage() + (Game.RANDOMNUM.nextInt(player.getLevel() + 5) - (Game.RANDOMNUM.nextInt(player.getLevel() + 4)) - enemy.getArmor()));
+    public static void pAttack(Player player, Enemy enemy){
+        int eHpLoss = (player.getDamage() + (Game.RANDOMNUM.nextInt(5) - 2)  - enemy.getArmor());
         System.out.println("Enemy lost " + eHpLoss + " Health.");
         enemy.setHealth(enemy.getHealth() - eHpLoss);
-        return 0;
     }
 
-    public static int eAttack(Player player, Enemy enemy){
-        int pHpLoss = (enemy.getDamage() + (Game.RANDOMNUM.nextInt(enemy.getLevel() + 5) - (Game.RANDOMNUM.nextInt(enemy.getLevel() + 4)) - player.getArmor()));
+    public static void eAttack(Player player, Enemy enemy){
+        int pHpLoss = (enemy.getDamage() + (Game.RANDOMNUM.nextInt(5) - 2) - player.getArmor());
         System.out.println("You lost " + pHpLoss + " Health.");
         player.setHealth(player.getHealth() - pHpLoss);
-        return 0;
     }
 
     public static Boolean confirm(){
@@ -58,6 +56,33 @@ public class Helper {
         System.out.println("Losing ~30% of Experience");
         player.setExp((player.getExp()*2)/3);
         System.out.println("Respawning out of combat with full Health");
+        player.setHealth((player.getLevel()*3) + 47);
+    }
+
+    public static void heal(Player player, int potion){
+        switch(potion){
+            case 3:
+                System.out.println("Using Small Potion");
+                player.setHealth((player.getHealth()*12)/10);
+                if(player.getHealth() > (player.getLevel()*3) + 47)
+                    player.setHealth((player.getLevel()*3) + 47);
+                System.out.println("You are now at " + player.getHealth() + " Health.");
+                break;
+            case 4:
+                System.out.println("Using Medium Potion");
+                player.setHealth((player.getHealth()*15)/10);
+                if(player.getHealth() > (player.getLevel()*3) + 47)
+                    player.setHealth((player.getLevel()*3) + 47);
+                System.out.println("You are now at " + player.getHealth() + " Health.");
+                break;
+            case 5:
+                System.out.println("Using Large Potion");
+                player.setHealth((player.getHealth()*18)/10);
+                if(player.getHealth() > (player.getLevel()*3) + 47)
+                    player.setHealth((player.getLevel()*3) + 47);
+                System.out.println("You are now at " + player.getHealth() + " Health.");
+                break;
+        }
     }
 
     public static int getPercent(){

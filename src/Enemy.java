@@ -1,7 +1,7 @@
 public class Enemy {
 
     private int health = Game.RANDOMNUM.nextInt(20) + 15;
-    private int damage = Game.RANDOMNUM.nextInt(10) + 1;
+    private int damage = Game.RANDOMNUM.nextInt(10) + 5;
     private int armor = Game.RANDOMNUM.nextInt(5) + 1;
     private int speed = Game.RANDOMNUM.nextInt(10) + 1;
     private int level = (health / 10) + (damage / 3) + (armor / 2);

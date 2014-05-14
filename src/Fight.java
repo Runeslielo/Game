@@ -1,6 +1,6 @@
 public class Fight {
 
-    public void startFight(Player player){
+    public static void startFight(Player player){
         System.out.println("Enemy Found!");
         Enemy enemy = new Enemy();
         Fight.fightOptions(player, enemy);
@@ -11,13 +11,13 @@ public class Fight {
         System.out.println("\nEnemy has " + enemy.getHealth() + " Health");
         System.out.println("\nYou have " + player.getHealth() + " Health");
 
+
+
         String option = "";
-
-        System.out.println("\nFight");
-        System.out.println("Consume");
-        System.out.println("Run");
-
         do {
+            System.out.println("\nFight");
+            System.out.println("Consume");
+            System.out.println("Run");
             System.out.println("\nChoose an Option");
             option = Game.getInput.next();
         }
@@ -27,15 +27,23 @@ public class Fight {
     }
 
     public static Player fighting(Player player, Enemy enemy, String option){
-
-        do{
+        
             switch (option.toLowerCase()) {
-
                 case "fight":
-                    if (Helper.speed(player, enemy))
+                    if(Helper.speed(player, enemy)) {
                         Helper.pAttack(player, enemy);
-                    if (Helper.alive(enemy))
+                        if(Helper.isAlive(enemy))
+                            Helper.eAttack(player, enemy);
+                        else
+                            option = "";
+                    }
+                    else{
                         Helper.eAttack(player, enemy);
+                        if(Helper.isAlive(player))
+                            Helper.pAttack(player, enemy);
+                        else
+                            option = "";
+                    }
                     break;
                 case "consume":
                     //Item System in progress
@@ -44,27 +52,28 @@ public class Fight {
                     if(Helper.getPercent() < 69)
                         break;
                     else
-                        Helper.eAttack(player, enemy);
+                        System.out.println("Failed to Run!");
+                    Helper.eAttack(player, enemy);
                     option = "";
+                    break;
+                default:
                     break;
             }
             if(option.equals("run"))
-                break;
-            else if(Helper.alive(enemy) && Helper.alive(player))
+                System.out.println("Successfully Ran Away");
+            else if(Helper.isAlive(enemy) && Helper.isAlive(player))
                 fightOptions(player,enemy);
-            else if(!Helper.alive(enemy) && Helper.alive(player)) {
+            else if(!Helper.isAlive(enemy) && Helper.isAlive(player)){
                 System.out.println("Enemy was defeated!");
                 //EXP GAIN
                 System.out.println("Loot the Body? ( Y / N )");
-                /*if(Helper.confirm() == true)
+                if(Helper.confirm())
                     return player; //Looting System in progress
                 else
-                    return null;*/
+                    return player;
             }
             else
                 Helper.pDead(player);
-        }
-        while(!option.equals("run") || Helper.alive(player));
         return player;
     }
 }

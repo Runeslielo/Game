@@ -1,14 +1,14 @@
 public class Player {
 
     private int health = 50;
-    private int damage = 3;
-    private int armor = 1;
+    private int damage = 7;
+    private int armor = 5;
     private int speed = 7;
     private int exp = 3;
     private int level = exp / 3;
     private int kills = 0;
     private int deaths = 0;
-
+    private Item[] inv = new Item[5];
     private String name = null;
 
     public Player setHealth(int health){
@@ -90,5 +90,14 @@ public class Player {
 
     public String getName(){
         return name;
+    }
+
+    public Player setInv(Item item, int invSlot){
+        this.inv[invSlot] = item;
+        return this;
+    }
+
+    public Item getInv(int invSlot){
+        return inv[invSlot];
     }
 }
